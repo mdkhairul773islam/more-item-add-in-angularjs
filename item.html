@@ -1,0 +1,50 @@
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+
+<body ng-app="anyname" ng-controller="AnyCtrl">
+  <p>Hello {{name}}!</p>
+
+  <div ng-repeat="item in items">
+    {{item.firstName}} {{item.lastName}}
+  </div>
+  <div ng-repeat="itemToAdd in itemsToAdd">
+    <input type="text" ng-model="itemToAdd.firstName" />
+    <input type="text" ng-model="itemToAdd.lastName" />
+    <button ng-click="add(itemToAdd)">Add</button>
+  </div>
+  <div>
+    <button ng-click="addNew()">Add new</button>
+  </div>
+</body>
+
+<script>
+	var app = angular.module('anyname', []);
+
+app.controller('AnyCtrl', function($scope) {
+
+  $scope.items = [];
+
+  $scope.itemsToAdd = [{
+    firstName: '',
+    lastName: ''
+  }];
+
+  $scope.add = function(itemToAdd) {
+
+    var index = $scope.itemsToAdd.indexOf(itemToAdd);
+
+    $scope.itemsToAdd.splice(index, 1);
+
+    $scope.items.push(angular.copy(itemToAdd))
+  }
+
+  $scope.addNew = function() {
+
+    $scope.itemsToAdd.push({
+      firstName: '',
+      lastName: ''
+    })
+  }
+});
+</script>
